@@ -6,6 +6,7 @@ import SectionHeader from '../components/SectionHeader';
 import { motion } from 'framer-motion';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import config from '../config';
 
 const AllProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -17,7 +18,7 @@ const AllProjects = () => {
     let isMounted = true;
     const fetchProjects = () => {
       setLoading(true);
-      fetch('http://127.0.0.1:8000/api/projects/')
+      fetch(`${config.apiBaseUrl}/api/projects/`)
         .then(res => res.json())
         .then(data => { if (isMounted) setProjects(data); })
         .catch(() => { if (isMounted) setError('Failed to fetch projects.'); })

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import config from '../config';
 
 export default function useFetch(url, options) {
   const [data, setData] = useState(null);
@@ -12,7 +13,9 @@ export default function useFetch(url, options) {
     let isMounted = true;
     setLoading(true);
     setError(null);
-    fetch(url, options)
+    // Prepend apiBaseUrl if url is relative
+    const fullUrl = url.startsWith('http') ? url : `${config.apiBaseUrl}${url}`;
+    fetch(fullUrl, options)
       .then(res => {
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();

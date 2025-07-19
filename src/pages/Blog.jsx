@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import config from '../config';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ const Blog = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/blog/')
+    fetch(`${config.apiBaseUrl}/api/blog/`)
       .then(res => res.json())
       .then(setPosts)
       .catch(() => setError('Failed to load blog posts.'))

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import config from '../config';
 
 const DailyLog = () => {
   const [logs, setLogs] = useState([]);
@@ -8,7 +9,7 @@ const DailyLog = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/daily-logs/')
+    fetch(`${config.apiBaseUrl}/api/daily-logs/`)
       .then(res => res.json())
       .then(setLogs)
       .catch(() => setError('Failed to load daily logs.'))

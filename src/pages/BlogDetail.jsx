@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { FaArrowLeft } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
+import config from '../config';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -14,7 +15,7 @@ const BlogDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://127.0.0.1:8000/api/blog/${slug}/`)
+    fetch(`${config.apiBaseUrl}/api/blog/${slug}/`)
       .then(res => {
         if (!res.ok) throw new Error('Blog not found');
         return res.json();

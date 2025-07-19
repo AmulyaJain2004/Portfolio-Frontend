@@ -8,6 +8,7 @@ import avatar from '../assets/iamhandsome8.jpg'; // Replace with your avatar ima
 import { FaArrowUp, FaEnvelope, FaYoutube, FaInstagram, FaLinkedin, FaGithub, FaMapMarkerAlt, FaDownload } from 'react-icons/fa';
 import EducationCard from '../components/EducationCard';
 import '../avatar-animate.css';
+import config from '../config';
 
 export default function Home() {
   const [skills, setSkills] = useState([]);
@@ -18,19 +19,19 @@ export default function Home() {
   const [experience, setExperience] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/skills/')
+    fetch(`${config.apiBaseUrl}/api/skills/`)
       .then(res => res.json())
       .then(setSkills);
-    fetch('http://127.0.0.1:8000/api/certifications/')
+    fetch(`${config.apiBaseUrl}/api/certifications/`)
       .then(res => res.json())
       .then(setCertifications);
-    fetch('http://127.0.0.1:8000/api/projects/')
+    fetch(`${config.apiBaseUrl}/api/projects/`)
       .then(res => res.json())
       .then(setProjects);
-    fetch('http://127.0.0.1:8000/api/education/')
+    fetch(`${config.apiBaseUrl}/api/education/`)
       .then(res => res.json())
       .then(setEducation);
-    fetch('http://127.0.0.1:8000/api/experience/')
+    fetch(`${config.apiBaseUrl}/api/experience/`)
       .then(res => res.json())
       .then(setExperience);
   }, []);
@@ -247,7 +248,7 @@ function ContactForm() {
     setLoading(true);
     setStatus('');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/messages/', {
+      const res = await fetch(`${config.apiBaseUrl}/api/messages/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -288,7 +289,7 @@ function SkillsTable() {
     let isMounted = true;
     const fetchSkills = () => {
       setLoading(true);
-      fetch('http://127.0.0.1:8000/api/skills/')
+      fetch(`${config.apiBaseUrl}/api/skills/`)
         .then(res => res.json())
         .then(data => { if (isMounted) setSkills(data); })
         .catch(() => { if (isMounted) setError('Failed to fetch skills.'); })
@@ -403,7 +404,7 @@ function ProjectsGrid() {
     let isMounted = true;
     const fetchProjects = () => {
       setLoading(true);
-      fetch('http://127.0.0.1:8000/api/projects/')
+      fetch(`${config.apiBaseUrl}/api/projects/`)
         .then(res => res.json())
         .then(data => { if (isMounted) setProjects(data); })
         .catch(() => { if (isMounted) setError('Failed to fetch projects.'); })
