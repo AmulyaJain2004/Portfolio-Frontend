@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
@@ -40,19 +41,15 @@ const Blog = () => {
                   <div key={post.id} className="bg-black border border-gray-700 rounded-xl shadow p-6 flex flex-col gap-2">
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                       <span className="font-semibold text-indigo-200 text-lg">{post.title}</span>
-                      <span className="text-gray-500 text-xs ml-2">{new Date(post.published_at).toLocaleDateString()}</span>
+                      <span className="text-gray-500 text-xs ml-2">{post.author} &middot; {new Date(post.date).toLocaleDateString()}</span>
                     </div>
-                    <p className="text-gray-300 text-sm line-clamp-3">{post.content.slice(0, 180)}{post.content.length > 180 ? '...' : ''}</p>
-                    {post.link && (
-                      <a
-                        href={post.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 px-6 py-3 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-base text-center"
-                      >
-                        {post.link.includes('linkedin') ? 'Read on LinkedIn' : 'Read Externally'}
-                      </a>
-                    )}
+                    <p className="text-gray-300 text-sm line-clamp-3">{post.summary}</p>
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      className="inline-block mt-2 px-6 py-3 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-base text-center"
+                    >
+                      Read More
+                    </Link>
                   </div>
                 ))}
               </div>
