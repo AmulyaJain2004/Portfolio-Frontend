@@ -109,7 +109,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 w-full justify-center sm:justify-start mt-4">
                   <a href="#projects" className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto">See My Projects</a>
-                  <a href="https://drive.google.com/file/d/1Qw7QwQwQwQwQwQwQwQwQwQwQwQwQwQw/view?usp=sharing" target="_blank" rel="noopener noreferrer"
+                  <a href="https://drive.google.com/file/d/1QubRwoEEuNmWLbqd16x3UVjbU-5z6Umn/view?usp=sharing" target="_blank" rel="noopener noreferrer"
                     className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-1 align-middle"
                     style={{ minWidth: '140px' }}
                   >
