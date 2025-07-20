@@ -1,9 +1,13 @@
-import React from "react";
-import { FaExternalLinkAlt, FaGithub, FaImage } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaExternalLinkAlt, FaGithub, FaImage, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const DEFAULT_IMAGE = "https://via.placeholder.com/400x200?text=Project";
 
 const ProjectCard = React.memo(({ project }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  // Check if description is long enough to need truncation
+  const shouldTruncate = project?.description && project.description.length > 150;
   // Safe guard against undefined or null project
   if (!project) {
     return (
@@ -47,9 +51,34 @@ const ProjectCard = React.memo(({ project }) => {
         <h3 className="text-xl font-extrabold text-indigo-200 mb-1 group-hover:text-yellow-200 transition-colors">
           {project?.title || "Untitled Project"}
         </h3>
-        <p className="text-gray-300 text-sm leading-relaxed flex-1 line-clamp-4">
-          {project?.description || "No description available"}
-        </p>
+        
+        {/* Description with expandable functionality */}
+        <div className="text-gray-300 text-sm leading-relaxed flex-1">
+          <p className={!isExpanded && shouldTruncate ? "line-clamp-3" : ""}>
+            {project?.description || "No description available"}
+          </p>
+          
+          {shouldTruncate && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-indigo-400 hover:text-yellow-200 text-xs font-medium mt-2 flex items-center gap-1 transition-colors"
+              aria-expanded={isExpanded}
+              aria-label={isExpanded ? "Show less description" : "Show more description"}
+            >
+              {isExpanded ? (
+                <>
+                  <span>Show Less</span>
+                  <FaChevronUp size={12} />
+                </>
+              ) : (
+                <>
+                  <span>More...</span>
+                  <FaChevronDown size={12} />
+                </>
+              )}
+            </button>
+          )}
+        </div>
         {project?.tech_stack && (
           <div className="flex flex-wrap gap-2 mt-2">
             {project.tech_stack.split(",").map((tech, idx) => (

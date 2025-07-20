@@ -1,1 +1,79 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+/* Custom line-clamp utility for compatibility */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Enhanced Markdown Content Styles */
+.markdown-content {
+  line-height: 1.7;
+}
+
+.markdown-content img {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  display: block;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #374151;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #1f2937;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.markdown-content td {
+  background-color: #111827;
+  color: #d1d5db;
+}
+
+.markdown-content hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #4f46e5, transparent);
+  margin: 2rem 0;
+}
+
+/* Code syntax highlighting enhancement */
+.markdown-content pre {
+  position: relative;
+}
+
+.markdown-content pre:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  border-radius: 0.5rem 0.5rem 0 0;
+}

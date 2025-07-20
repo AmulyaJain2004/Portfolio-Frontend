@@ -4,6 +4,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 // Lazy load pages
 const Home = React.lazy(() => import("./pages/Home"));
 const Blog = React.lazy(() => import("./pages/Blog"));
+const BlogDetail = React.lazy(() => import("./pages/BlogDetail"));
 const DailyLog = React.lazy(() => import("./pages/DailyLog"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const AllProjects = React.lazy(() => import("./pages/AllProjects"));
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogDetail />} />
             <Route path="/daily-logs" element={<DailyLog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/projects" element={<AllProjects />} />

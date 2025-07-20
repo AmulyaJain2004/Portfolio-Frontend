@@ -32,23 +32,249 @@ export default function Home() {
   const [showScroll, setShowScroll] = useState(false);
   const [education, setEducation] = useState([]);
   const [experience, setExperience] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Cache management
+  const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
+  const CACHE_KEYS = {
+    skills: "portfolio_skills_cache",
+    certifications: "portfolio_certifications_cache",
+    projects: "portfolio_projects_cache",
+    education: "portfolio_education_cache",
+    experience: "portfolio_experience_cache",
+    timestamp: "portfolio_cache_timestamp",
+  };
+
+  const getCachedData = (key) => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEYS[key]);
+      return cached ? JSON.parse(cached) : null;
+    } catch (error) {
+      console.error(`Error parsing cached ${key}:`, error);
+      return null;
+    }
+  };
+
+  const setCachedData = (key, data) => {
+    try {
+      localStorage.setItem(CACHE_KEYS[key], JSON.stringify(data));
+    } catch (error) {
+      console.error(`Error caching ${key}:`, error);
+    }
+  };
+
+  const isCacheValid = () => {
+    const timestamp = localStorage.getItem(CACHE_KEYS.timestamp);
+    if (!timestamp) return false;
+    return Date.now() - parseInt(timestamp) < CACHE_DURATION;
+  };
+
+  const loadCachedData = () => {
+    const cachedSkills = getCachedData("skills");
+    const cachedCertifications = getCachedData("certifications");
+    const cachedProjects = getCachedData("projects");
+    const cachedEducation = getCachedData("education");
+    const cachedExperience = getCachedData("experience");
+
+    if (cachedSkills)
+      setSkills(Array.isArray(cachedSkills) ? cachedSkills : []);
+    if (cachedCertifications)
+      setCertifications(
+        Array.isArray(cachedCertifications) ? cachedCertifications : []
+      );
+    if (cachedProjects)
+      setProjects(Array.isArray(cachedProjects) ? cachedProjects : []);
+    if (cachedEducation)
+      setEducation(Array.isArray(cachedEducation) ? cachedEducation : []);
+    if (cachedExperience)
+      setExperience(Array.isArray(cachedExperience) ? cachedExperience : []);
+
+    return !!(
+      cachedSkills ||
+      cachedCertifications ||
+      cachedProjects ||
+      cachedEducation ||
+      cachedExperience
+    );
+  };
 
   useEffect(() => {
-    fetch(`${config.apiBaseUrl}/api/skills/`)
-      .then((res) => res.json())
-      .then(setSkills);
-    fetch(`${config.apiBaseUrl}/api/certifications/`)
-      .then((res) => res.json())
-      .then(setCertifications);
-    fetch(`${config.apiBaseUrl}/api/projects/`)
-      .then((res) => res.json())
-      .then(setProjects);
-    fetch(`${config.apiBaseUrl}/api/education/`)
-      .then((res) => res.json())
-      .then(setEducation);
-    fetch(`${config.apiBaseUrl}/api/experience/`)
-      .then((res) => res.json())
-      .then(setExperience);
+    const initializeData = async () => {
+      // Check if cache is valid and load cached data
+      if (isCacheValid()) {
+        const hasCachedData = loadCachedData();
+        if (hasCachedData) {
+          setIsLoading(false);
+
+          // Optionally fetch fresh data in background to keep cache updated
+          setTimeout(() => {
+            fetchDataInBackground();
+          }, 1000);
+
+          return;
+        }
+      }
+
+      // No valid cache or first visit - show loading and fetch data
+      await fetchData();
+    };
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [
+          skillsRes,
+          certificationsRes,
+          projectsRes,
+          educationRes,
+          experienceRes,
+        ] = await Promise.all([
+          fetch(`${config.apiBaseUrl}/api/skills/`),
+          fetch(`${config.apiBaseUrl}/api/certifications/`),
+          fetch(`${config.apiBaseUrl}/api/projects/`),
+          fetch(`${config.apiBaseUrl}/api/education/`),
+          fetch(`${config.apiBaseUrl}/api/experience/`),
+        ]);
+
+        let hasNewData = false;
+
+        if (skillsRes.ok) {
+          const skillsData = await skillsRes.json();
+          const validSkills = Array.isArray(skillsData) ? skillsData : [];
+          setSkills(validSkills);
+          setCachedData("skills", validSkills);
+          hasNewData = true;
+        }
+        if (certificationsRes.ok) {
+          const certificationsData = await certificationsRes.json();
+          const validCertifications = Array.isArray(certificationsData)
+            ? certificationsData
+            : [];
+          setCertifications(validCertifications);
+          setCachedData("certifications", validCertifications);
+          hasNewData = true;
+        }
+        if (projectsRes.ok) {
+          const projectsData = await projectsRes.json();
+          const validProjects = Array.isArray(projectsData) ? projectsData : [];
+          setProjects(validProjects);
+          setCachedData("projects", validProjects);
+          hasNewData = true;
+        }
+        if (educationRes.ok) {
+          const educationData = await educationRes.json();
+          const validEducation = Array.isArray(educationData)
+            ? educationData
+            : [];
+          setEducation(validEducation);
+          setCachedData("education", validEducation);
+          hasNewData = true;
+        }
+        if (experienceRes.ok) {
+          const experienceData = await experienceRes.json();
+          const validExperience = Array.isArray(experienceData)
+            ? experienceData
+            : [];
+          setExperience(validExperience);
+          setCachedData("experience", validExperience);
+          hasNewData = true;
+        }
+
+        // Update cache timestamp if we got new data
+        if (hasNewData) {
+          localStorage.setItem(CACHE_KEYS.timestamp, Date.now().toString());
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Try to load any cached data as fallback
+        const hasCachedData = loadCachedData();
+        if (!hasCachedData) {
+          // Ensure all states remain as arrays even on error
+          setSkills([]);
+          setCertifications([]);
+          setProjects([]);
+          setEducation([]);
+          setExperience([]);
+        }
+      } finally {
+        // Add a small delay to ensure smooth transition
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      }
+    };
+
+    const fetchDataInBackground = async () => {
+      // Fetch data silently in background to update cache
+      try {
+        const [
+          skillsRes,
+          certificationsRes,
+          projectsRes,
+          educationRes,
+          experienceRes,
+        ] = await Promise.all([
+          fetch(`${config.apiBaseUrl}/api/skills/`),
+          fetch(`${config.apiBaseUrl}/api/certifications/`),
+          fetch(`${config.apiBaseUrl}/api/projects/`),
+          fetch(`${config.apiBaseUrl}/api/education/`),
+          fetch(`${config.apiBaseUrl}/api/experience/`),
+        ]);
+
+        let hasUpdates = false;
+
+        if (skillsRes.ok) {
+          const skillsData = await skillsRes.json();
+          const validSkills = Array.isArray(skillsData) ? skillsData : [];
+          setCachedData("skills", validSkills);
+          setSkills(validSkills);
+          hasUpdates = true;
+        }
+        if (certificationsRes.ok) {
+          const certificationsData = await certificationsRes.json();
+          const validCertifications = Array.isArray(certificationsData)
+            ? certificationsData
+            : [];
+          setCachedData("certifications", validCertifications);
+          setCertifications(validCertifications);
+          hasUpdates = true;
+        }
+        if (projectsRes.ok) {
+          const projectsData = await projectsRes.json();
+          const validProjects = Array.isArray(projectsData) ? projectsData : [];
+          setCachedData("projects", validProjects);
+          setProjects(validProjects);
+          hasUpdates = true;
+        }
+        if (educationRes.ok) {
+          const educationData = await educationRes.json();
+          const validEducation = Array.isArray(educationData)
+            ? educationData
+            : [];
+          setCachedData("education", validEducation);
+          setEducation(validEducation);
+          hasUpdates = true;
+        }
+        if (experienceRes.ok) {
+          const experienceData = await experienceRes.json();
+          const validExperience = Array.isArray(experienceData)
+            ? experienceData
+            : [];
+          setCachedData("experience", validExperience);
+          setExperience(validExperience);
+          hasUpdates = true;
+        }
+
+        if (hasUpdates) {
+          localStorage.setItem(CACHE_KEYS.timestamp, Date.now().toString());
+          console.log("Portfolio data updated in background");
+        }
+      } catch (error) {
+        console.warn("Background data fetch failed:", error);
+      }
+    };
+
+    initializeData();
   }, []);
 
   useEffect(() => {
@@ -60,6 +286,60 @@ export default function Home() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  // Show preloader while content is loading
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="flex flex-col items-center gap-6">
+          {/* Loading Text */}
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-yellow-200 mb-2">
+              Loading Portfolio
+            </h2>
+            <p className="text-indigo-200 text-base mb-6">
+              Fetching latest content...
+            </p>
+          </div>
+
+          {/* Main Loading Spinner */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400"></div>
+            <span className="text-gray-300 text-base">Please wait</span>
+          </div>
+
+          {/* Loading Progress Bars */}
+          <div className="w-80 space-y-3">
+            <div className="w-full bg-gray-800 rounded-full h-2">
+              <div
+                className="bg-indigo-500 h-2 rounded-full animate-pulse"
+                style={{ width: "100%" }}
+              ></div>
+            </div>
+            <div className="w-full bg-gray-800 rounded-full h-2">
+              <div
+                className="bg-purple-500 h-2 rounded-full animate-pulse"
+                style={{ width: "85%" }}
+              ></div>
+            </div>
+            <div className="w-full bg-gray-800 rounded-full h-2">
+              <div
+                className="bg-yellow-500 h-2 rounded-full animate-pulse"
+                style={{ width: "70%" }}
+              ></div>
+            </div>
+          </div>
+
+          {/* Loading Status */}
+          <div className="text-center mt-4">
+            <p className="text-gray-400 text-sm">
+              Loading skills, projects, and experience...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -261,7 +541,7 @@ export default function Home() {
                     href="https://drive.google.com/file/d/1QubRwoEEuNmWLbqd16x3UVjbU-5z6Umn/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-1 align-middle"
+                    className="px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-1 align-middle"
                     style={{ minWidth: "140px" }}
                   >
                     <FaDownload
@@ -285,7 +565,7 @@ export default function Home() {
             className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
           >
             <SectionHeader title="Skills" />
-            <SkillsTable />
+            <SkillsTable skills={skills} />
           </section>
           <div className="my-8 w-full flex justify-center relative">
             <div
@@ -592,45 +872,30 @@ function ContactForm() {
 }
 
 // Add SkillsTable component
-function SkillsTable() {
-  const [skills, setSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  // Removed intervalRef
+function SkillsTable({ skills }) {
+  // Group skills by main category and subcategory (subcategory may be null)
+  // This useMemo MUST be called in every render, regardless of loading/error states
+  const grouped = useMemo(() => {
+    try {
+      if (!skills || !Array.isArray(skills)) {
+        return {};
+      }
+      const result = {};
+      skills.forEach((skill) => {
+        if (!skill) return; // Skip null/undefined skills
+        const main = skill?.main_category?.name || "Uncategorized";
+        const sub = skill?.subcategory?.name || null;
+        if (!result[main]) result[main] = {};
+        if (!result[main][sub]) result[main][sub] = [];
+        result[main][sub].push(skill);
+      });
+      return result;
+    } catch (error) {
+      console.error("Error in skills grouping useMemo:", error);
+      return {};
+    }
+  }, [skills]);
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchSkills = () => {
-      setLoading(true);
-      fetch(`${config.apiBaseUrl}/api/skills/`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (isMounted) setSkills(data);
-        })
-        .catch(() => {
-          if (isMounted) setError("Failed to fetch skills.");
-        })
-        .finally(() => {
-          if (isMounted) setLoading(false);
-        });
-    };
-    fetchSkills();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="w-full flex justify-center items-center py-8">
-        <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400 mr-2"></span>{" "}
-        <span>Loading...</span>
-      </div>
-    );
-  }
-  if (error) {
-    return <div className="w-full text-center text-red-400 py-4">{error}</div>;
-  }
   if (!skills.length) {
     return (
       <div className="w-full text-center text-gray-400 py-4">
@@ -639,32 +904,19 @@ function SkillsTable() {
     );
   }
 
-  // Group skills by main category and subcategory (subcategory may be null)
-  const grouped = useMemo(() => {
-    if (!skills || !Array.isArray(skills)) {
-      return {};
-    }
-    const result = {};
-    skills.forEach((skill) => {
-      if (!skill) return; // Skip null/undefined skills
-      const main = skill?.main_category?.name || "Uncategorized";
-      const sub = skill?.subcategory?.name || null;
-      if (!result[main]) result[main] = {};
-      if (!result[main][sub]) result[main][sub] = [];
-      result[main][sub].push(skill);
-    });
-    return result;
-  }, [skills]);
-
   return (
     <div className="overflow-x-auto w-full">
-      <table className="min-w-full border border-gray-700 text-gray-100 text-sm">
+      <table className="min-w-full border border-gray-700 text-gray-100 text-xs sm:text-sm table-fixed">
         <thead>
           <tr className="bg-black">
-            <th className="border border-gray-700 px-4 py-2">Main Category</th>
-            <th className="border border-gray-700 px-4 py-2">Subcategory</th>
-            <th className="border border-gray-700 px-4 py-2" colSpan="5">
-              Technologies / Tools
+            <th className="border border-gray-700 px-1 py-2 w-1/5 sm:w-1/6 text-center text-xs sm:text-sm">
+              Category
+            </th>
+            <th className="border border-gray-700 px-1 py-2 w-1/5 sm:w-1/6 text-center text-xs sm:text-sm">
+              Subcategory
+            </th>
+            <th className="border border-gray-700 px-2 py-2 w-3/5 sm:w-2/3 text-center text-xs sm:text-sm">
+              Technologies
             </th>
           </tr>
         </thead>
@@ -678,21 +930,39 @@ function SkillsTable() {
                   {j === 0 && (
                     <td
                       rowSpan={subcatNames.length}
-                      className="border border-gray-700 px-4 py-2 font-bold align-top bg-black whitespace-nowrap"
+                      className="border border-gray-700 px-1 py-2 font-bold bg-black whitespace-nowrap text-xs sm:text-sm text-center align-middle"
                     >
-                      {main}
+                      <span className="block sm:hidden text-xs leading-tight">
+                        {main.split(" ").map((word, idx) => (
+                          <span key={idx} className="block">
+                            {word}
+                          </span>
+                        ))}
+                      </span>
+                      <span className="hidden sm:block">{main}</span>
                     </td>
                   )}
                   {/* Only show subcategory cell if subcategory exists, else empty cell */}
                   {skillsArr[0]?.subcategory?.name ? (
-                    <td className="border border-gray-700 px-4 py-2 bg-black whitespace-nowrap">
-                      {skillsArr[0].subcategory.name}
+                    <td className="border border-gray-700 px-1 py-2 bg-black whitespace-nowrap text-xs sm:text-sm text-center">
+                      <span className="block sm:hidden text-xs leading-tight">
+                        {skillsArr[0].subcategory.name
+                          .split(" ")
+                          .map((word, idx) => (
+                            <span key={idx} className="block">
+                              {word}
+                            </span>
+                          ))}
+                      </span>
+                      <span className="hidden sm:block">
+                        {skillsArr[0].subcategory.name}
+                      </span>
                     </td>
                   ) : (
-                    <td className="border border-gray-700 px-4 py-2 bg-black whitespace-nowrap"></td>
+                    <td className="border border-gray-700 px-1 py-2 bg-black whitespace-nowrap text-xs sm:text-sm text-center"></td>
                   )}
-                  <td className="border border-gray-700 px-4 py-2 bg-black">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  <td className="border border-gray-700 px-2 py-3 bg-black">
+                    <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
                       {skillsArr && skillsArr.length > 0
                         ? skillsArr.map((skill) =>
                             skill ? (
@@ -736,15 +1006,15 @@ const SkillIcon = React.memo(function SkillIcon({ skill }) {
         <img
           src={skill.icon_url}
           alt={skill?.name || "Skill icon"}
-          className="w-10 h-10 mb-1 rounded bg-gray-900 border border-gray-800 object-contain"
+          className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain"
           onError={handleImgError}
         />
       ) : (
-        <span className="w-10 h-10 mb-1 flex items-center justify-center bg-gray-800 rounded text-gray-500">
+        <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-gray-500 text-sm sm:text-base md:text-lg">
           ?
         </span>
       )}
-      <span className="text-xs text-center group-hover:underline">
+      <span className="text-xs text-center group-hover:underline mt-1 leading-tight max-w-16 sm:max-w-20">
         {skill?.name || "Unknown"}
       </span>
     </a>
@@ -760,19 +1030,33 @@ function ProjectsGrid() {
 
   useEffect(() => {
     let isMounted = true;
-    const fetchProjects = () => {
+    const fetchProjects = async () => {
       setLoading(true);
-      fetch(`${config.apiBaseUrl}/api/projects/`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (isMounted) setProjects(data);
-        })
-        .catch(() => {
-          if (isMounted) setError("Failed to fetch projects.");
-        })
-        .finally(() => {
-          if (isMounted) setLoading(false);
-        });
+      setError(null);
+      try {
+        const response = await fetch(`${config.apiBaseUrl}/api/projects/`);
+        if (response.ok) {
+          const data = await response.json();
+          if (isMounted) {
+            setProjects(Array.isArray(data) ? data : []);
+          }
+        } else {
+          if (isMounted) {
+            setError(
+              `Failed to fetch projects: ${response.status} ${response.statusText}`
+            );
+            setProjects([]);
+          }
+        }
+      } catch (error) {
+        console.error("Projects fetch error:", error);
+        if (isMounted) {
+          setError(`Network error: ${error.message}`);
+          setProjects([]);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     };
     fetchProjects();
     return () => {
@@ -781,10 +1065,15 @@ function ProjectsGrid() {
   }, []);
 
   const featuredProjects = useMemo(() => {
-    if (!projects || !Array.isArray(projects)) {
+    try {
+      if (!projects || !Array.isArray(projects)) {
+        return [];
+      }
+      return projects.filter((p) => p && p.featured);
+    } catch (error) {
+      console.error("Error in featuredProjects useMemo:", error);
       return [];
     }
-    return projects.filter((p) => p?.featured);
   }, [projects]);
 
   if (loading) {
@@ -808,17 +1097,9 @@ function ProjectsGrid() {
 
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {featuredProjects && featuredProjects.length > 0 ? (
-        featuredProjects.map((project) =>
-          project ? (
-            <ProjectCard key={project?.id || Math.random()} project={project} />
-          ) : null
-        )
-      ) : (
-        <div className="col-span-full text-center text-gray-400 py-4">
-          No featured projects found.
-        </div>
-      )}
+      {featuredProjects.map((project) => (
+        <ProjectCard key={project?.id || Math.random()} project={project} />
+      ))}
     </div>
   );
 }

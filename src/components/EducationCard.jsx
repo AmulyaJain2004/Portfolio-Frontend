@@ -13,9 +13,11 @@ const EducationCard = React.memo(({ education }) => {
 
   return (
     <div className="relative bg-gradient-to-br from-black/80 via-gray-900/80 to-indigo-900/70 border border-gray-700 rounded-2xl shadow-lg p-0 flex flex-col overflow-hidden hover:border-indigo-400 transition-all group">
-      <div className="flex items-center gap-3 px-5 pt-5 pb-2">
-        <FaUniversity className="text-indigo-400 text-2xl" />
-        <span className="font-bold text-lg text-indigo-200 group-hover:text-yellow-200 transition-colors">
+      <div className="flex items-start gap-3 px-5 pt-5 pb-2">
+        <div className="flex-shrink-0 mt-1">
+          <FaUniversity className="text-indigo-400 w-6 h-6" />
+        </div>
+        <span className="font-bold text-lg text-indigo-200 group-hover:text-yellow-200 transition-colors flex-1 leading-tight">
           {education?.degree || "Unknown Degree"}
         </span>
       </div>
