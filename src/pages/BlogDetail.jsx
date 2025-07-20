@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { FaArrowLeft, FaCalendar, FaUser, FaClock, FaTags } from 'react-icons/fa';
-import ReactMarkdown from 'react-markdown';
-import { motion } from 'framer-motion';
-import config from '../config';
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import {
+  FaArrowLeft,
+  FaCalendar,
+  FaUser,
+  FaClock,
+  FaTags,
+} from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
+import { motion } from "framer-motion";
+import config from "../config";
 
 const BlogDetail = () => {
   const { slug } = useParams();
   const [blog, setBlog] = useState(null);
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -18,47 +24,63 @@ const BlogDetail = () => {
     const fetchBlogDetail = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
-        console.log('Fetching blog detail from backend API:', `${config.apiBaseUrl}/blog/${slug}/`);
-        
+        console.log(
+          "Fetching blog detail from backend API:",
+          `${config.apiBaseUrl}/blog/${slug}/`
+        );
+
         // Fetch blog metadata from Django backend
         const blogResponse = await fetch(`${config.apiBaseUrl}/blog/${slug}/`);
-        
+
         if (!blogResponse.ok) {
           throw new Error(`HTTP error! status: ${blogResponse.status}`);
         }
-        
+
         const blogData = await blogResponse.json();
-        console.log('Blog detail fetched successfully:', blogData);
-        
+        console.log("Blog detail fetched successfully:", blogData);
+
         setBlog(blogData);
 
         // Fetch markdown content from public folder if content_path is provided
         if (blogData.content_path) {
           try {
-            console.log('Fetching markdown content from:', `/blogs/${blogData.content_path}`);
-            const contentResponse = await fetch(`/blogs/${blogData.content_path}`);
-            
+            console.log(
+              "Fetching markdown content from:",
+              `/blogs/${blogData.content_path}`
+            );
+            const contentResponse = await fetch(
+              `/blogs/${blogData.content_path}`
+            );
+
             if (!contentResponse.ok) {
-              throw new Error(`Content file not found: ${blogData.content_path}`);
+              throw new Error(
+                `Content file not found: ${blogData.content_path}`
+              );
             }
-            
+
             const contentText = await contentResponse.text();
             setContent(contentText);
-            console.log('Markdown content loaded successfully');
-            
+            console.log("Markdown content loaded successfully");
           } catch (contentError) {
-            console.error('Content fetch error:', contentError);
-            setContent(`# ${blogData.title}\n\n*Content file could not be loaded.*\n\n${blogData.summary || 'No summary available.'}`);
+            console.error("Content fetch error:", contentError);
+            setContent(
+              `# ${blogData.title}\n\n*Content file could not be loaded.*\n\n${
+                blogData.summary || "No summary available."
+              }`
+            );
           }
         } else {
           // If no content_path, create content from summary
-          setContent(`# ${blogData.title}\n\n${blogData.summary || 'No content available for this blog post.'}`);
+          setContent(
+            `# ${blogData.title}\n\n${
+              blogData.summary || "No content available for this blog post."
+            }`
+          );
         }
-
       } catch (error) {
-        console.error('Error fetching blog detail:', error);
+        console.error("Error fetching blog detail:", error);
         setError(`Failed to load blog post: ${error.message}`);
       } finally {
         setLoading(false);
@@ -68,7 +90,7 @@ const BlogDetail = () => {
     if (slug) {
       fetchBlogDetail();
     } else {
-      setError('No blog slug provided');
+      setError("No blog slug provided");
       setLoading(false);
     }
   }, [slug]);
@@ -77,10 +99,10 @@ const BlogDetail = () => {
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown date";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -100,7 +122,9 @@ const BlogDetail = () => {
           <div className="w-full flex justify-center items-center py-12">
             <div className="flex items-center gap-3">
               <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400"></span>
-              <span className="text-gray-300 text-lg">Loading blog post...</span>
+              <span className="text-gray-300 text-lg">
+                Loading blog post...
+              </span>
             </div>
           </div>
         </main>
@@ -114,7 +138,10 @@ const BlogDetail = () => {
         <Navbar />
         <main className="min-h-screen flex flex-col items-center bg-black pt-24 pb-12 relative">
           <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col gap-0 mt-4 relative px-4 sm:px-8 z-10">
-            <Link to="/blog" className="flex items-center gap-2 text-indigo-300 hover:text-yellow-300 mb-4 text-sm font-bold">
+            <Link
+              to="/blog"
+              className="flex items-center gap-2 text-indigo-300 hover:text-yellow-300 mb-4 text-sm font-bold"
+            >
               <FaArrowLeft /> Back to Blog
             </Link>
             <div className="w-full text-center text-red-400 py-12">
@@ -135,7 +162,10 @@ const BlogDetail = () => {
         <Navbar />
         <main className="min-h-screen flex flex-col items-center bg-black pt-24 pb-12 relative">
           <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col gap-0 mt-4 relative px-4 sm:px-8 z-10">
-            <Link to="/blog" className="flex items-center gap-2 text-indigo-300 hover:text-yellow-300 mb-4 text-sm font-bold">
+            <Link
+              to="/blog"
+              className="flex items-center gap-2 text-indigo-300 hover:text-yellow-300 mb-4 text-sm font-bold"
+            >
               <FaArrowLeft /> Back to Blog
             </Link>
             <div className="w-full text-center text-gray-400 py-12">
@@ -156,9 +186,15 @@ const BlogDetail = () => {
       <main className="min-h-screen flex flex-col items-center bg-black pt-24 pb-12 relative">
         {/* Background borders */}
         <div className="pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-4xl z-0 flex">
-          <div className="border-l border-gray-700 h-full" style={{width: 0}}></div>
+          <div
+            className="border-l border-gray-700 h-full"
+            style={{ width: 0 }}
+          ></div>
           <div className="flex-1"></div>
-          <div className="border-r border-gray-700 h-full" style={{width: 0}}></div>
+          <div
+            className="border-r border-gray-700 h-full"
+            style={{ width: 0 }}
+          ></div>
         </div>
 
         <div className="w-full max-w-4xl mx-auto flex-1 flex flex-col gap-0 mt-4 relative px-4 sm:px-8 z-10">
@@ -168,8 +204,8 @@ const BlogDetail = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Link 
-              to="/blog" 
+            <Link
+              to="/blog"
               className="inline-flex items-center gap-2 text-indigo-300 hover:text-yellow-300 mb-6 text-sm font-semibold transition-colors duration-300 group"
             >
               <FaArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1" />
@@ -178,7 +214,7 @@ const BlogDetail = () => {
           </motion.div>
 
           {/* Blog header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -217,7 +253,7 @@ const BlogDetail = () => {
             {/* Tags */}
             {blog?.tags && (
               <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {blog.tags.split(',').map((tag, idx) => (
+                {blog.tags.split(",").map((tag, idx) => (
                   <span
                     key={idx}
                     className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-900/50 border border-indigo-400/30 text-indigo-200 rounded-full text-sm font-medium hover:bg-indigo-800/50 transition-colors"
@@ -238,7 +274,7 @@ const BlogDetail = () => {
           </motion.div>
 
           {/* Blog content */}
-          <motion.article 
+          <motion.article
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -249,36 +285,64 @@ const BlogDetail = () => {
                 className="markdown-content"
                 components={{
                   // Custom heading styles
-                  h1: ({children}) => <h1 className="text-3xl font-bold text-indigo-200 mb-6 mt-8 first:mt-0">{children}</h1>,
-                  h2: ({children}) => <h2 className="text-2xl font-bold text-indigo-300 mb-4 mt-8">{children}</h2>,
-                  h3: ({children}) => <h3 className="text-xl font-semibold text-indigo-400 mb-3 mt-6">{children}</h3>,
-                  
+                  h1: ({ children }) => (
+                    <h1 className="text-3xl font-bold text-indigo-200 mb-6 mt-8 first:mt-0">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-2xl font-bold text-indigo-300 mb-4 mt-8">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-xl font-semibold text-indigo-400 mb-3 mt-6">
+                      {children}
+                    </h3>
+                  ),
+
                   // Custom paragraph styles
-                  p: ({children}) => <p className="text-gray-100 leading-relaxed mb-4 text-base">{children}</p>,
-                  
+                  p: ({ children }) => (
+                    <p className="text-gray-100 leading-relaxed mb-4 text-base">
+                      {children}
+                    </p>
+                  ),
+
                   // Custom list styles
-                  ul: ({children}) => <ul className="list-disc list-inside text-gray-100 mb-4 ml-4 space-y-2">{children}</ul>,
-                  ol: ({children}) => <ol className="list-decimal list-inside text-gray-100 mb-4 ml-4 space-y-2">{children}</ol>,
-                  
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-inside text-gray-100 mb-4 ml-4 space-y-2">
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-inside text-gray-100 mb-4 ml-4 space-y-2">
+                      {children}
+                    </ol>
+                  ),
+
                   // Custom link styles
-                  a: ({children, href}) => (
-                    <a 
-                      href={href} 
+                  a: ({ children, href }) => (
+                    <a
+                      href={href}
                       className="text-indigo-400 hover:text-yellow-300 underline font-medium transition-colors duration-300"
-                      target={href?.startsWith('http') ? '_blank' : '_self'}
-                      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      target={href?.startsWith("http") ? "_blank" : "_self"}
+                      rel={
+                        href?.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                     >
                       {children}
                     </a>
                   ),
-                  
+
                   // Custom code block styles
-                  pre: ({children}) => (
+                  pre: ({ children }) => (
                     <pre className="bg-gray-800 border border-gray-600 rounded-lg p-4 overflow-x-auto mb-4 text-sm">
                       {children}
                     </pre>
                   ),
-                  code: ({children, className}) => {
+                  code: ({ children, className }) => {
                     const isInline = !className;
                     return isInline ? (
                       <code className="bg-gray-800 text-yellow-300 px-2 py-1 rounded text-sm font-mono">
@@ -290,9 +354,9 @@ const BlogDetail = () => {
                       </code>
                     );
                   },
-                  
+
                   // Custom blockquote styles
-                  blockquote: ({children}) => (
+                  blockquote: ({ children }) => (
                     <blockquote className="border-l-4 border-indigo-500 bg-indigo-900/20 pl-4 py-2 mb-4 italic text-gray-200">
                       {children}
                     </blockquote>
@@ -305,7 +369,7 @@ const BlogDetail = () => {
           </motion.article>
 
           {/* Back to blog button */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -326,4 +390,4 @@ const BlogDetail = () => {
   );
 };
 
-export default BlogDetail; 
+export default BlogDetail;

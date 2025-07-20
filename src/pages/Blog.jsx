@@ -3,7 +3,13 @@ import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { FaCalendar, FaUser, FaClock, FaArrowRight, FaTags } from "react-icons/fa";
+import {
+  FaCalendar,
+  FaUser,
+  FaClock,
+  FaArrowRight,
+  FaTags,
+} from "react-icons/fa";
 import config from "../config";
 
 const Blog = () => {
@@ -15,33 +21,35 @@ const Blog = () => {
     const fetchBlogs = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
-        console.log('Fetching blogs from backend API:', `${config.apiBaseUrl}/blog/`);
+        console.log(
+          "Fetching blogs from backend API:",
+          `${config.apiBaseUrl}/blog/`
+        );
         const response = await fetch(`${config.apiBaseUrl}/blog/`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
-        console.log('Blog data fetched successfully:', data);
-        
+        console.log("Blog data fetched successfully:", data);
+
         if (Array.isArray(data)) {
           setPosts(data);
         } else {
-          console.error('Expected array but got:', typeof data);
-          setError('Invalid data format received from server');
+          console.error("Expected array but got:", typeof data);
+          setError("Invalid data format received from server");
         }
-        
       } catch (error) {
-        console.error('Error fetching blogs:', error);
+        console.error("Error fetching blogs:", error);
         setError(`Failed to load blog posts: ${error.message}`);
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchBlogs();
   }, []);
 
@@ -108,10 +116,10 @@ const BlogCard = React.memo(({ post }) => {
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown date";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -161,7 +169,9 @@ const BlogCard = React.memo(({ post }) => {
 
         {/* Summary */}
         <p className="text-gray-300 text-sm leading-relaxed line-clamp-3 flex-1 mb-4">
-          {post?.summary || post?.excerpt || "No summary available for this blog post."}
+          {post?.summary ||
+            post?.excerpt ||
+            "No summary available for this blog post."}
         </p>
 
         {/* Read More Button */}
@@ -171,9 +181,9 @@ const BlogCard = React.memo(({ post }) => {
             className="group/btn inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-sm"
           >
             <span>Read Full Article</span>
-            <FaArrowRight 
-              size={12} 
-              className="transition-transform duration-300 group-hover/btn:translate-x-1" 
+            <FaArrowRight
+              size={12}
+              className="transition-transform duration-300 group-hover/btn:translate-x-1"
             />
           </Link>
         )}

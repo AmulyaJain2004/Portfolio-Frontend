@@ -20,12 +20,12 @@ Vite works out of the box with sensible defaults:
 
 ```javascript
 // vite.config.js
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-})
+});
 ```
 
 ### 📦 Rich Plugin Ecosystem
@@ -49,11 +49,11 @@ npm create vite@latest my-app -- --template vanilla
 
 ## Performance Benefits
 
-| Feature | Webpack | Vite |
-|---------|---------|------|
-| Dev Server Start | 10-30s | < 1s |
-| HMR Speed | 1-3s | < 100ms |
-| Build Time | 30-60s | 10-20s |
+| Feature          | Webpack | Vite    |
+| ---------------- | ------- | ------- |
+| Dev Server Start | 10-30s  | < 1s    |
+| HMR Speed        | 1-3s    | < 100ms |
+| Build Time       | 30-60s  | 10-20s  |
 
 > These are approximate times for medium-sized projects
 

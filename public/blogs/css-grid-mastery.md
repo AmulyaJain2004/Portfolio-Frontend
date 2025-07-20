@@ -30,7 +30,7 @@ While both are powerful, they serve different purposes:
 ### Container Properties
 
 1. **grid-template-columns** - Defines column sizes
-2. **grid-template-rows** - Defines row sizes  
+2. **grid-template-rows** - Defines row sizes
 3. **gap** - Sets spacing between grid items
 4. **grid-template-areas** - Creates named grid areas
 
@@ -58,10 +58,18 @@ While both are powerful, they serve different purposes:
   gap: 20px;
 }
 
-.header { grid-area: header; }
-.sidebar { grid-area: sidebar; }
-.main { grid-area: main; }
-.footer { grid-area: footer; }
+.header {
+  grid-area: header;
+}
+.sidebar {
+  grid-area: sidebar;
+}
+.main {
+  grid-area: main;
+}
+.footer {
+  grid-area: footer;
+}
 ```
 
 ### Responsive Card Grid
@@ -124,4 +132,4 @@ CSS Grid empowers developers to create sophisticated layouts with clean, maintai
 
 ---
 
-*Happy coding! 🎨*
+_Happy coding! 🎨_
