@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Global smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scroll margin for fixed navbar */
+.scroll-section {
+  scroll-margin-top: 100px;
+}
+
 /* Custom line-clamp utility for compatibility */
 .line-clamp-3 {
   display: -webkit-box;

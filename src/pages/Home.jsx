@@ -308,34 +308,6 @@ export default function Home() {
             <span className="text-gray-300 text-base">Please wait</span>
           </div>
 
-          {/* Loading Progress Bars */}
-          <div className="w-80 space-y-3">
-            <div className="w-full bg-gray-800 rounded-full h-2">
-              <div
-                className="bg-indigo-500 h-2 rounded-full animate-pulse"
-                style={{ width: "100%" }}
-              ></div>
-            </div>
-            <div className="w-full bg-gray-800 rounded-full h-2">
-              <div
-                className="bg-purple-500 h-2 rounded-full animate-pulse"
-                style={{ width: "85%" }}
-              ></div>
-            </div>
-            <div className="w-full bg-gray-800 rounded-full h-2">
-              <div
-                className="bg-yellow-500 h-2 rounded-full animate-pulse"
-                style={{ width: "70%" }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Loading Status */}
-          <div className="text-center mt-4">
-            <p className="text-gray-400 text-sm">
-              Loading skills, projects, and experience...
-            </p>
-          </div>
         </div>
       </div>
     );
@@ -538,7 +510,7 @@ export default function Home() {
                     See My Projects
                   </a>
                   <a
-                    href="https://drive.google.com/file/d/1QubRwoEEuNmWLbqd16x3UVjbU-5z6Umn/view?usp=sharing"
+                    href="https://drive.google.com/file/d/1LP-SSP8Oe_K-AILvDRoytno9QdzTQeYM/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-1 align-middle"
@@ -721,7 +693,8 @@ export default function Home() {
           </div>
           <section
             id="contact"
-            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow mb-8"
+            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow mb-8 scroll-section"
+            style={{ scrollMarginTop: '100px' }}
           >
             <SectionHeader title="Contact" />
             <p className="text-gray-400 text-center mb-4">

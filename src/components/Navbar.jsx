@@ -14,7 +14,34 @@ const navLinks = [
 const scrollToSection = (id) => {
   const el = document.getElementById(id);
   if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
+    // For contact section, we need extra offset due to large projects section
+    const isContactSection = id === 'contact';
+    const navbarHeight = isContactSection ? 120 : 100; // Extra offset for contact
+    
+    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - navbarHeight;
+    
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+    
+    // Fallback: Try again after a short delay if elements are still loading
+    setTimeout(() => {
+      const updatedEl = document.getElementById(id);
+      if (updatedEl) {
+        const updatedPosition = updatedEl.getBoundingClientRect().top + window.pageYOffset;
+        const updatedOffset = updatedPosition - navbarHeight;
+        
+        // Only scroll again if we're not close to the target
+        if (Math.abs(window.pageYOffset - updatedOffset) > 50) {
+          window.scrollTo({
+            top: updatedOffset,
+            behavior: "smooth"
+          });
+        }
+      }
+    }, 500);
   }
 };
 
@@ -31,7 +58,9 @@ const Navbar = () => {
       scrollToSection(section);
     } else {
       navigate("/", { replace: false });
-      setTimeout(() => scrollToSection(section), 100); // Wait for navigation
+      // Multiple attempts with increasing delays to ensure page loads completely
+      setTimeout(() => scrollToSection(section), 300);
+      setTimeout(() => scrollToSection(section), 800); // Second attempt after more content loads
     }
   };
 
