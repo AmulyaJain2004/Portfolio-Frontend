@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaBlog, FaBookOpen, FaHome, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaBlog,
+  FaBookOpen,
+  FaHome,
+  FaBars,
+  FaTimes,
+  FaGraduationCap,
+  FaBriefcase,
+} from "react-icons/fa";
 
 const navLinks = [
   { name: "Home", to: "/", icon: <FaHome /> },
   { name: "Blog", to: "/blog", icon: <FaBlog /> },
   { name: "Daily Logs", to: "/daily-logs", icon: <FaBookOpen /> },
   { name: "Projects", to: "/projects" },
+  { name: "Education", to: "#education", icon: <FaGraduationCap /> },
+  { name: "Experience", to: "#experience", icon: <FaBriefcase /> },
   { name: "Contact", to: "#contact" },
 ];
 
@@ -15,29 +25,30 @@ const scrollToSection = (id) => {
   const el = document.getElementById(id);
   if (el) {
     // For contact section, we need extra offset due to large projects section
-    const isContactSection = id === 'contact';
+    const isContactSection = id === "contact";
     const navbarHeight = isContactSection ? 120 : 100; // Extra offset for contact
-    
+
     const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
     const offsetPosition = elementPosition - navbarHeight;
-    
+
     window.scrollTo({
       top: offsetPosition,
-      behavior: "smooth"
+      behavior: "smooth",
     });
-    
+
     // Fallback: Try again after a short delay if elements are still loading
     setTimeout(() => {
       const updatedEl = document.getElementById(id);
       if (updatedEl) {
-        const updatedPosition = updatedEl.getBoundingClientRect().top + window.pageYOffset;
+        const updatedPosition =
+          updatedEl.getBoundingClientRect().top + window.pageYOffset;
         const updatedOffset = updatedPosition - navbarHeight;
-        
+
         // Only scroll again if we're not close to the target
         if (Math.abs(window.pageYOffset - updatedOffset) > 50) {
           window.scrollTo({
             top: updatedOffset,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         }
       }
@@ -82,7 +93,7 @@ const Navbar = () => {
           to="/"
           className="text-xl font-bold text-yellow-200 hover:text-indigo-400 transition-colors"
         >
-          Portfolio
+          AJ
         </Link>
       </div>
 
@@ -110,6 +121,26 @@ const Navbar = () => {
                 <span className="hidden lg:inline">{link.icon}</span>
                 <span>{link.name}</span>
               </Link>
+            ) : link.name === "Education" ? (
+              <a
+                href="#education"
+                aria-label="Education"
+                onClick={handleSectionNav("education")}
+                className="flex items-center gap-2 text-gray-100 hover:text-indigo-400 transition-colors"
+              >
+                <span className="hidden lg:inline">{link.icon}</span>
+                <span>{link.name}</span>
+              </a>
+            ) : link.name === "Experience" ? (
+              <a
+                href="#experience"
+                aria-label="Experience"
+                onClick={handleSectionNav("experience")}
+                className="flex items-center gap-2 text-gray-100 hover:text-indigo-400 transition-colors"
+              >
+                <span className="hidden lg:inline">{link.icon}</span>
+                <span>{link.name}</span>
+              </a>
             ) : link.name === "Contact" ? (
               <a
                 href="#contact"
@@ -192,8 +223,29 @@ const Navbar = () => {
                     className="flex items-center gap-3 px-6 py-3 text-gray-100 hover:text-indigo-400 hover:bg-gray-900 transition-colors"
                     onClick={handleLinkClick}
                   >
+                    {link.icon}
                     <span>{link.name}</span>
                   </Link>
+                ) : link.name === "Education" ? (
+                  <a
+                    href="#education"
+                    aria-label="Education"
+                    onClick={handleSectionNav("education")}
+                    className="flex items-center gap-3 px-6 py-3 text-gray-100 hover:text-indigo-400 hover:bg-gray-900 transition-colors"
+                  >
+                    {link.icon}
+                    <span>{link.name}</span>
+                  </a>
+                ) : link.name === "Experience" ? (
+                  <a
+                    href="#experience"
+                    aria-label="Experience"
+                    onClick={handleSectionNav("experience")}
+                    className="flex items-center gap-3 px-6 py-3 text-gray-100 hover:text-indigo-400 hover:bg-gray-900 transition-colors"
+                  >
+                    {link.icon}
+                    <span>{link.name}</span>
+                  </a>
                 ) : link.name === "Contact" ? (
                   <a
                     href="#contact"
@@ -201,6 +253,7 @@ const Navbar = () => {
                     onClick={handleSectionNav("contact")}
                     className="flex items-center gap-3 px-6 py-3 text-gray-100 hover:text-indigo-400 hover:bg-gray-900 transition-colors"
                   >
+                    {link.icon}
                     <span>{link.name}</span>
                   </a>
                 ) : link.to.startsWith("/") ? (

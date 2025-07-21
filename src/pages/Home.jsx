@@ -307,7 +307,6 @@ export default function Home() {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400"></div>
             <span className="text-gray-300 text-base">Please wait</span>
           </div>
-
         </div>
       </div>
     );
@@ -320,9 +319,20 @@ export default function Home() {
         <div className="w-full max-w-3xl flex flex-col gap-0 mt-4 border-l border-r border-gray-700 relative px-4 sm:px-8 pt-20">
           <section
             id="profile"
-            className="w-full flex flex-col items-center gap-6 relative z-10 border border-gray-700 bg-black rounded-2xl shadow p-8"
+            className="w-full flex flex-col items-center relative z-10 border border-gray-700 bg-black rounded-2xl shadow p-6 sm:p-8"
           >
-            <div className="w-full flex flex-col sm:flex-row items-center gap-8">
+            {/* Header Section */}
+            <div className="w-full text-center mb-6">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-yellow-200 mb-3">
+                Welcome to My World
+              </h1>
+              <p className="text-base sm:text-lg text-indigo-200">
+                Showcasing my work, skills, and journey as a developer.
+              </p>
+            </div>
+
+            {/* Main Profile Content */}
+            <div className="w-full flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
               <div className="relative group">
                 <div className="bg-gradient-to-tr from-indigo-500 via-purple-500 to-yellow-300 p-1 sm:p-2 rounded-full shadow-lg transition-all duration-300 w-[170px] h-[170px] sm:w-[240px] sm:h-[240px] flex items-center justify-center group-hover:animate-gradient-spin">
                   <img
@@ -333,197 +343,192 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex-1 flex flex-col items-center sm:items-start">
-                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-yellow-200 mb-2 text-center sm:text-left">
-                  Welcome to My World
-                </h1>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-indigo-200 mb-4 text-center sm:text-left">
-                  Showcasing my work, skills, and journey as a developer.
-                </p>
                 <div className="w-full bg-black rounded-2xl shadow p-6 border border-gray-700 text-center sm:text-left flex flex-col gap-3">
                   <span className="text-lg text-indigo-200 font-semibold">
                     Amulya Jain
                   </span>
                   <span className="text-gray-300 font-medium">
-                    Computer Science Undergrad &mdash; Specializing in
-                    Artificial Intelligence and Machine Learning
+                    Pre-Final year CS Undergrad, AI & ML Engineer, Full-Stack ML
+                    Developer
                   </span>
                   <p className="text-gray-400 text-base mt-2">
-                    Passionate about developing intelligent, data-driven
-                    solutions using Python, modern ML frameworks, and full-stack
-                    technologies. Open to AI-focused internships, freelance
-                    roles, and collaborative research projects to apply and
-                    expand my skills.
+                    Passionate about building intelligent, data-driven systems
+                    using Python, modern ML frameworks, and full-stack web
+                    technologies. Experienced in deploying real-world NLP,
+                    voice-AI, and predictive analytics solutions. Actively
+                    exploring Deep Learning, Generative AI, LLMs, LLMOps, and
+                    MLOps to build scalable, production-ready AI systems.
                   </p>
                 </div>
-                <div className="w-full flex flex-wrap justify-center gap-4 my-4 border border-gray-700 rounded-2xl bg-gray-900/80 p-4">
-                  {/* Coding/Social Platforms Grid */}
-                  <a
-                    href="https://kaggle.com/amulyajain@2004"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg"
-                      alt="Kaggle"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      Kaggle
-                    </span>
-                  </a>
-                  <a
-                    href="https://hashnode.com/@alokik89"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hashnode.svg"
-                      alt="Hashnode"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      Hashnode
-                    </span>
-                  </a>
-                  <a
-                    href="https://www.codechef.com/users/alokik_engg_89"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://cdn.jsdelivr.net/npm/simple-icons@3.1.0/icons/codechef.svg"
-                      alt="CodeChef"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      CodeChef
-                    </span>
-                  </a>
-                  <a
-                    href="https://www.hackerrank.com/profile/jainamulyawin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg"
-                      alt="HackerRank"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      HackerRank
-                    </span>
-                  </a>
-                  <a
-                    href="https://www.leetcode.com/amulya_89-curious"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg"
-                      alt="LeetCode"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      LeetCode
-                    </span>
-                  </a>
-                  <a
-                    href="https://auth.geeksforgeeks.org/user/user_6jg2kzes1gw"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/geeks-for-geeks.svg"
-                      alt="GeeksforGeeks"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      GFG
-                    </span>
-                  </a>
-                  <a
-                    href="https://www.topcoder.com/members/amulya[2004]"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/topcoder.svg"
-                      alt="TopCoder"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      TopCoder
-                    </span>
-                  </a>
-                  <a
-                    href="https://github.com/AmulyaJain2004"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg"
-                      alt="GitHub"
-                      height="30"
-                      width="30"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      GitHub
-                    </span>
-                  </a>
-                  <a
-                    href="https://codeforces.com/profile/dark_alokik_engg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group hover:scale-110 transition"
-                  >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codeforces.svg"
-                      alt="Codeforces"
-                      height="30"
-                      width="40"
-                    />
-                    <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
-                      Codeforces
-                    </span>
-                  </a>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 w-full justify-center sm:justify-start mt-4">
-                  <a
-                    href="#projects"
-                    className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto"
-                  >
-                    See My Projects
-                  </a>
-                  <a
-                    href="https://drive.google.com/file/d/1LP-SSP8Oe_K-AILvDRoytno9QdzTQeYM/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-1 align-middle"
-                    style={{ minWidth: "140px" }}
-                  >
-                    <FaDownload
-                      className="inline align-middle text-base"
-                      style={{ marginBottom: "2px" }}
-                    />
-                    <span className="inline align-middle"> View Resume</span>
-                  </a>
-                </div>
               </div>
+            </div>
+
+            {/* Social Media Platforms */}
+            <div className="w-full flex flex-wrap justify-center gap-4 my-6 border border-gray-700 rounded-2xl bg-gray-900/80 p-4">
+              {/* Coding/Social Platforms Grid */}
+              <a
+                href="https://kaggle.com/amulyajain@2004"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg"
+                  alt="Kaggle"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  Kaggle
+                </span>
+              </a>
+              <a
+                href="https://hashnode.com/@alokik89"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hashnode.svg"
+                  alt="Hashnode"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  Hashnode
+                </span>
+              </a>
+              <a
+                href="https://www.codechef.com/users/alokik_engg_89"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://cdn.jsdelivr.net/npm/simple-icons@3.1.0/icons/codechef.svg"
+                  alt="CodeChef"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  CodeChef
+                </span>
+              </a>
+              <a
+                href="https://www.hackerrank.com/profile/jainamulyawin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/hackerrank.svg"
+                  alt="HackerRank"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  HackerRank
+                </span>
+              </a>
+              <a
+                href="https://www.leetcode.com/amulya_89-curious"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg"
+                  alt="LeetCode"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  LeetCode
+                </span>
+              </a>
+              <a
+                href="https://auth.geeksforgeeks.org/user/user_6jg2kzes1gw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/geeks-for-geeks.svg"
+                  alt="GeeksforGeeks"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  GFG
+                </span>
+              </a>
+              <a
+                href="https://www.topcoder.com/members/amulya[2004]"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/topcoder.svg"
+                  alt="TopCoder"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  TopCoder
+                </span>
+              </a>
+              <a
+                href="https://github.com/AmulyaJain2004"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg"
+                  alt="GitHub"
+                  height="30"
+                  width="30"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  GitHub
+                </span>
+              </a>
+              <a
+                href="https://codeforces.com/profile/dark_alokik_engg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group hover:scale-110 transition"
+              >
+                <img
+                  src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/codeforces.svg"
+                  alt="Codeforces"
+                  height="30"
+                  width="40"
+                />
+                <span className="text-xs mt-1 text-indigo-200 group-hover:underline font-semibold">
+                  Codeforces
+                </span>
+              </a>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md justify-center">
+              <a
+                href="#projects"
+                className="inline-block px-6 py-3 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto"
+              >
+                See My Projects
+              </a>
+              <a
+                href="https://drive.google.com/file/d/1LP-SSP8Oe_K-AILvDRoytno9QdzTQeYM/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center w-full sm:w-auto flex items-center justify-center gap-2"
+              >
+                <FaDownload className="text-base" />
+                <span>View Resume</span>
+              </a>
             </div>
           </section>
           <div className="my-8 w-full flex justify-center relative">
@@ -538,6 +543,102 @@ export default function Home() {
           >
             <SectionHeader title="Skills" />
             <SkillsTable skills={skills} />
+          </section>
+          <div className="my-8 w-full flex justify-center relative">
+            <div
+              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
+              style={{ zIndex: 1 }}
+            ></div>
+          </div>
+          <section
+            id="experience"
+            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
+          >
+            <SectionHeader title="Experience" />
+            <div className="w-full flex flex-col gap-6">
+              {experience && experience.length > 0 ? (
+                experience.map((exp) => (
+                  <div
+                    key={exp?.id || Math.random()}
+                    className="bg-black border border-gray-700 rounded-xl shadow p-4 flex flex-col gap-1"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                      <span className="font-semibold text-indigo-300 text-lg">
+                        {exp?.title || "Unknown Position"}
+                      </span>
+                      <span className="text-gray-400 text-sm ml-2">
+                        {exp?.organization || "Unknown Organization"}
+                      </span>
+                    </div>
+                    <span className="text-gray-500 text-xs">
+                      {exp?.start_date
+                        ? new Date(exp.start_date).toLocaleDateString()
+                        : "Start date unknown"}{" "}
+                      -{" "}
+                      {exp?.end_date
+                        ? new Date(exp.end_date).toLocaleDateString()
+                        : "Present"}
+                    </span>
+                    {exp?.description && (
+                      <span className="text-gray-400 text-xs mt-1">
+                        {exp.description}
+                      </span>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-gray-400 py-4">
+                  No experience information available
+                </div>
+              )}
+            </div>
+          </section>
+          <div className="my-8 w-full flex justify-center relative">
+            <div
+              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
+              style={{ zIndex: 1 }}
+            ></div>
+          </div>
+          <section
+            id="education"
+            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
+          >
+            <SectionHeader title="Education" />
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {education && education.length > 0 ? (
+                education.map((edu) => (
+                  <EducationCard
+                    key={edu?.id || Math.random()}
+                    education={edu}
+                  />
+                ))
+              ) : (
+                <div className="text-center text-gray-400 py-4 col-span-full">
+                  No education information available
+                </div>
+              )}
+            </div>
+          </section>
+          <div className="my-8 w-full flex justify-center relative">
+            <div
+              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
+              style={{ zIndex: 1 }}
+            ></div>
+          </div>
+          <section
+            id="projects"
+            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
+          >
+            <SectionHeader title="Projects" />
+            <ProjectsGrid />
+            <div className="w-full flex justify-center mt-6 mb-2">
+              <a
+                href="/projects"
+                className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center"
+              >
+                View All Projects
+              </a>
+            </div>
           </section>
           <div className="my-8 w-full flex justify-center relative">
             <div
@@ -596,105 +697,9 @@ export default function Home() {
             ></div>
           </div>
           <section
-            id="projects"
-            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
-          >
-            <SectionHeader title="Projects" />
-            <ProjectsGrid />
-            <div className="w-full flex justify-center mt-6 mb-2">
-              <a
-                href="/projects"
-                className="inline-block px-4 py-2 rounded-full bg-black text-yellow-300 font-bold shadow border-2 border-yellow-300 hover:text-indigo-700 hover:border-indigo-700 transition-colors text-sm text-center"
-              >
-                View All Projects
-              </a>
-            </div>
-          </section>
-          <div className="my-8 w-full flex justify-center relative">
-            <div
-              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
-              style={{ zIndex: 1 }}
-            ></div>
-          </div>
-          <section
-            id="education"
-            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
-          >
-            <SectionHeader title="Education" />
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {education && education.length > 0 ? (
-                education.map((edu) => (
-                  <EducationCard
-                    key={edu?.id || Math.random()}
-                    education={edu}
-                  />
-                ))
-              ) : (
-                <div className="text-center text-gray-400 py-4 col-span-full">
-                  No education information available
-                </div>
-              )}
-            </div>
-          </section>
-          <div className="my-8 w-full flex justify-center relative">
-            <div
-              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
-              style={{ zIndex: 1 }}
-            ></div>
-          </div>
-          <section
-            id="experience"
-            className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow"
-          >
-            <SectionHeader title="Experience" />
-            <div className="w-full flex flex-col gap-6">
-              {experience && experience.length > 0 ? (
-                experience.map((exp) => (
-                  <div
-                    key={exp?.id || Math.random()}
-                    className="bg-black border border-gray-700 rounded-xl shadow p-4 flex flex-col gap-1"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
-                      <span className="font-semibold text-indigo-300 text-lg">
-                        {exp?.title || "Unknown Position"}
-                      </span>
-                      <span className="text-gray-400 text-sm ml-2">
-                        {exp?.organization || "Unknown Organization"}
-                      </span>
-                    </div>
-                    <span className="text-gray-500 text-xs">
-                      {exp?.start_date
-                        ? new Date(exp.start_date).toLocaleDateString()
-                        : "Start date unknown"}{" "}
-                      -{" "}
-                      {exp?.end_date
-                        ? new Date(exp.end_date).toLocaleDateString()
-                        : "Present"}
-                    </span>
-                    {exp?.description && (
-                      <span className="text-gray-400 text-xs mt-1">
-                        {exp.description}
-                      </span>
-                    )}
-                  </div>
-                ))
-              ) : (
-                <div className="text-center text-gray-400 py-4">
-                  No experience information available
-                </div>
-              )}
-            </div>
-          </section>
-          <div className="my-8 w-full flex justify-center relative">
-            <div
-              className="border-t border-gray-700 w-screen absolute left-1/2 -translate-x-1/2"
-              style={{ zIndex: 1 }}
-            ></div>
-          </div>
-          <section
             id="contact"
             className="w-full flex flex-col items-center border border-gray-700 bg-black rounded-2xl shadow mb-8 scroll-section"
-            style={{ scrollMarginTop: '100px' }}
+            style={{ scrollMarginTop: "100px" }}
           >
             <SectionHeader title="Contact" />
             <p className="text-gray-400 text-center mb-4">
