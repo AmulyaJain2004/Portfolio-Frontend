@@ -184,7 +184,7 @@ const BlogCard = React.memo(({ post }) => {
         {/* Read More Button */}
         {post?.slug && (
           <Link
-            to={`/api/blog/${post.slug}`}
+            to={`/blog/${post.slug}`}
             className="group/btn inline-flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-sm"
           >
             <span>Read Full Article</span>

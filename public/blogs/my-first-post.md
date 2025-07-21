@@ -1,19 +1,15 @@
-# My First Blog Post
-
-Welcome to my first blog post! This content is written in markdown and rendered directly from the public/blogs/my-first-post.md file.
-
-## Why Markdown?
+# Why Markdown?
 
 Markdown is easy to write and read, and it allows you to format your content with headings, lists, links, and more.
 
-### Key Benefits
+## Key Benefits
 
 - **Fast**: Quick to write and edit
 - **Flexible**: Supports various formatting options
 - **Developer-friendly**: Perfect for technical documentation
 - _Easy to learn_: Simple syntax that anyone can master
 
-### Code Examples
+## Code Examples
 
 Here's some inline code: `const message = "Hello World";`
 
@@ -27,7 +23,7 @@ function greetUser(name) {
 console.log(greetUser("Reader"));
 ```
 
-### Links and More
+## Links and More
 
 Check out my [portfolio](/) to see more of my work!
 
@@ -37,7 +33,7 @@ Check out my [portfolio](/) to see more of my work!
 
 **Enjoy reading!** Hope you find this content useful and engaging.
 
-#### Final Thoughts
+### Final Thoughts
 
 This demonstrates how markdown content is beautifully rendered with custom styling, including:
 
