@@ -24,10 +24,17 @@ const Blog = () => {
 
       try {
         console.log(
-          "Fetching blogs from backend API:",
-          `${config.apiBaseUrl}/blog/`
+          "Fetching blogs from Django backend:",
+          `${config.apiBaseUrl}/api/blog/`
         );
-        const response = await fetch(`${config.apiBaseUrl}/blog/`);
+
+        const response = await fetch(`${config.apiBaseUrl}/api/blog/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors", // Explicitly set CORS mode
+        });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
