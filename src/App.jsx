@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react"
 import ErrorBoundary from "./components/ErrorBoundary";
 // Lazy load pages
 const Home = React.lazy(() => import("./pages/Home"));
@@ -13,6 +14,7 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
+        <Analytics />
         <Suspense
           fallback={
             <div className="w-full flex justify-center items-center py-8">
