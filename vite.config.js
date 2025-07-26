@@ -6,7 +6,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    minify: true, // Change back to true
-    sourcemap: false, // Disable in production if needed
+    minify: true,
+    sourcemap: false,
+    outDir: 'dist'
+  },
+  base: "/", // ensures paths resolve correctly
+  server: {
+    historyApiFallback: true // good for dev
   },
 });
