@@ -25,7 +25,12 @@ const DailyLog = () => {
           <div className="flex-1"></div>
           <div className="border-r border-gray-700 h-full" style={{width: 0}}></div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-indigo-300 mb-8 text-center z-10 relative">Daily Logs</h1>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-indigo-300 mb-4 text-center z-10 relative">Daily Logs</h1>
+        <p className="text-gray-300 text-center max-w-2xl mx-auto mb-8 px-4 z-10 relative leading-relaxed">
+          This is my daily journaling section to keep myself motivated and grounded with what I achieved day by day. 
+          Here I track my activities, experiments with new technologies, improvements made, and personal reflections 
+          to stay focused on my targets and document my growth journey with learn and build in public.
+        </p>
         <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col gap-0 mt-4 relative px-4 sm:px-8 z-10">
           <div className="relative z-10">
             {loading ? (
