@@ -327,7 +327,7 @@ export default function Home() {
                 Welcome to My World
               </h1>
               <p className="text-base sm:text-lg text-indigo-200">
-                Showcasing my work, skills, and journey as a developer.
+                Showcasing my work, skills and journey as a developer.
               </p>
             </div>
 
@@ -348,15 +348,14 @@ export default function Home() {
                     Amulya Jain
                   </span>
                   <span className="text-gray-300 font-medium">
-                    Pre-Final year CS Undergrad, AI & ML Engineer, Full-Stack ML
-                    Developer
+                    Pre-Final year CS Undergrad, AI & ML Engineer, Full-Stack Developer
                   </span>
                   <p className="text-gray-400 text-base mt-2">
                     Passionate about building intelligent, data-driven systems
-                    using Python, modern ML frameworks, and full-stack web
-                    technologies. Experienced in deploying real-world NLP,
-                    voice-AI, and predictive analytics solutions. Actively
-                    exploring Deep Learning, Generative AI, LLMs, LLMOps, and
+                    using Python, modern ML frameworks and full-stack web
+                    technologies. Experienced in deploying real-world voice-AI 
+                    and predictive analytics solutions. Actively
+                    exploring Deep Learning, Generative AI, LLMs and
                     MLOps to build scalable, production-ready AI systems.
                   </p>
                 </div>
